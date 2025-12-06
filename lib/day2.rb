@@ -5,6 +5,10 @@ class Day2
     parse(input).sum { |range| invalid_ids(range).sum }
   end
 
+  def part2(input)
+    parse(input).sum { |range| invalid_ids2(range).sum }
+  end
+
   def parse(input)
     input.scan(/(\d+)-(\d+)/).map { |(first, last)| (first.to_i..last.to_i) }
   end
@@ -14,12 +18,20 @@ class Day2
   end
 
   def invalid_num?(num)
-    halves = split_string(num.to_s)
-    halves.first == halves.last
+    str_num = num.to_s
+    mid = str_num.length / 2
+    [str_num[0...mid], str_num[mid..]].uniq.length == 1
   end
 
-  def split_string(str)
-    mid = str.length / 2
-    [str[0...mid], str[mid..]]
+  def invalid_ids2(range)
+    range.select { invalid_num2?(it) }
+  end
+
+  def invalid_num2?(num)
+    str_num = num.to_s
+    (1..(str_num.length / 2)).any? do |split_point|
+      part = str_num[0, split_point]
+      str_num =~ /^(#{part}){2,}$/
+    end
   end
 end
