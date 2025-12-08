@@ -5,17 +5,21 @@ require "day6"
 
 RSpec.describe Day6 do
   let(:input) do
-    <<~INPUT
-      123 328  51 64
-       45 64  387 23
-        6 98  215 314
-      *   +   *   +
-    INPUT
+    ["123 328  51 64 \n",
+     " 45 64  387 23 \n",
+     "  6 98  215 314\n",
+     "*   +   *   +  \n"].join
   end
 
   describe "#part1" do
     it "returns the grand total found by adding together all of the answers to the individual problems" do
       expect(subject.part1(input)).to eq(4_277_556)
+    end
+  end
+
+  describe "#part2" do
+    it "returns the grand total found by adding together all of the answers to the individual problems" do
+      expect(subject.part2(input)).to eq(3_263_827)
     end
   end
 
@@ -25,6 +29,15 @@ RSpec.describe Day6 do
                                           [328, 64, 98, "+"],
                                           [51, 387, 215, "*"],
                                           [64, 23, 314, "+"]])
+    end
+  end
+
+  describe "#parse2" do
+    it "parses the input into individual problems" do
+      expect(subject.parse2(input)).to eq([[356, 24, 1, "*"],
+                                           [8, 248, 369, "+"],
+                                           [175, 581, 32, "*"],
+                                           [4, 431, 623, "+"]])
     end
   end
 
