@@ -10,6 +10,11 @@ class Day7
     end
   end
 
+  def part2(input)
+    lines = input.lines.map(&:chomp)
+    traverse(lines, 1, lines.first.index("S"))
+  end
+
   private
 
   # rubocop:disable Metrics/MethodLength
@@ -27,4 +32,26 @@ class Day7
     end
   end
   # rubocop:enable Metrics/MethodLength
+
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def traverse(lines, row, col, cache = {})
+    return 1 if row >= lines.length - 1
+
+    key = [row, col]
+    return cache[key] if cache.key?(key)
+
+    char = lines[row][col]
+    timelines = 0
+
+    if char == "."
+      timelines = traverse(lines, row + 1, col, cache)
+    elsif char == "^"
+      timelines += traverse(lines, row + 1, col - 1, cache)
+      timelines += traverse(lines, row + 1, col + 1, cache)
+    end
+
+    cache[key] = timelines
+    timelines
+  end
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 end

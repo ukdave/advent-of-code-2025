@@ -30,4 +30,10 @@ RSpec.describe Day7 do
       expect(subject.part1(input)).to eq(21)
     end
   end
+
+  describe "#part2" do
+    it "returns the number paths from the start to the bottom" do
+      expect(subject.part2(input)).to eq(40)
+    end
+  end
 end
