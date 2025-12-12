@@ -5,8 +5,14 @@ class Day8
 
   def part1(input, connection_limit)
     junction_boxes = parse(input)
-    circuits = connect_shortest(junction_boxes, connection_limit)
+    circuits = connect_shortest(distances(junction_boxes).take(connection_limit))
     circuits.map(&:length).sort.last(3).reduce(1, :*)
+  end
+
+  def part2(input)
+    junction_boxes = parse(input)
+    pair = connect_all(junction_boxes)
+    pair.first.x * pair.last.x
   end
 
   def parse(input)
@@ -15,11 +21,18 @@ class Day8
     end
   end
 
-  def connect_shortest(junction_boxes, connection_limit)
-    distances(junction_boxes).take(connection_limit)
-                             .each_with_object([]) do |((jb1, jb2), _dist), circuits|
+  def connect_shortest(junction_box_distances)
+    junction_box_distances.each_with_object([]) do |((jb1, jb2), _dist), circuits|
       connect(jb1, jb2, circuits)
     end
+  end
+
+  def connect_all(junction_boxes)
+    distances(junction_boxes).each_with_object({ circuits: [], last_pair: [] }) do |((jb1, jb2), _dist), result|
+      connect(jb1, jb2, result[:circuits])
+      result[:last_pair] = [jb1, jb2]
+      break result if result[:circuits].length == 1 && result[:circuits].first.length == junction_boxes.length
+    end[:last_pair]
   end
 
   # rubocop:disable Metrics/CyclomaticComplexity

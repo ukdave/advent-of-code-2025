@@ -34,4 +34,10 @@ RSpec.describe Day8 do
       expect(subject.part1(input, 10)).to eq(40)
     end
   end
+
+  describe "#part2" do
+    it "returns the X coordinates of the last to junction boxes need to form a single circuit multiplied together" do
+      expect(subject.part2(input)).to eq(25_272)
+    end
+  end
 end
