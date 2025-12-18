@@ -6,3 +6,4 @@ require "day9"
 
 input = File.read("inputs/day9.txt")
 puts Day9.new.part1(input)
+puts Day9.new.part2(input)

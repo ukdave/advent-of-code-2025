@@ -15,5 +15,8 @@ Style/StringLiterals:
 Style/StringLiteralsInInterpolation:
   EnforcedStyle: double_quotes
 
+RSpec/ExampleLength:
+  Max: 10
+
 RSpec/NamedSubject:
   Enabled: false
